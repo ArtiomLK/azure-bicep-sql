@@ -25,7 +25,7 @@ param sql_n string
 @description('Enable public network access')
 param sql_enable_public_access bool = true
 
-resource sqlServer 'Microsoft.Sql/servers@2021-11-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   name: sql_n
   location: location
   tags: tags
