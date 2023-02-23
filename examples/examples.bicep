@@ -82,6 +82,8 @@ var subnets = [
   {
     name: 'snet-vm'
     subnetPrefix: '150.100.1.0/24'
+    privateEndpointNetworkPolicies: 'Enabled'
+    delegations: []
   }
 ]
 
