@@ -68,7 +68,7 @@ resource databasePublic 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
 var subnets = [
   {
     name: 'snet-pe'
-    subnetPrefix: '150.100.0/24'
+    subnetPrefix: '150.100.0.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
     delegations: []
   }
