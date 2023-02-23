@@ -20,6 +20,13 @@ param location string = 'eastus2'
 var sql_public_n = 'sql-server-public'
 var sql_private_n = 'sql-server-private'
 
+var vmName = take('vm${uniqueString(resourceGroup().id)}', 15)
+var publicIpAddressName = '${vmName}PublicIP'
+var networkInterfaceName = '${vmName}NetInt'
+var osDiskType = 'StandardSSD_LRS'
+@description('The size of the VM')
+var VmSize = 'Standard_D2_v3'
+
 // ------------------------------------------------------------------------------------------------
 // SQL Database Configuration parameters
 // ------------------------------------------------------------------------------------------------
@@ -71,6 +78,10 @@ var subnets = [
     subnetPrefix: '150.100.0.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
     delegations: []
+  }
+  {
+    name: 'snet-vm'
+    subnetPrefix: '150.100.1.0/24'
   }
 ]
 
@@ -132,4 +143,81 @@ resource databasePrivate 'Microsoft.Sql/servers/databases@2022-05-01-preview' = 
   dependsOn: [
     sqlServerPrivate
   ]
+}
+
+resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
+  name: publicIpAddressName
+  location: location
+  tags: {
+    displayName: publicIpAddressName
+  }
+  properties: {
+    publicIPAllocationMethod: 'Dynamic'
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+  name: networkInterfaceName
+  location: location
+  tags: {
+    displayName: networkInterfaceName
+  }
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'ipConfig1'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {
+            id: publicIpAddress.id
+          }
+          subnet: {
+            id: vnet.properties.subnets[1].id
+          }
+        }
+      }
+    ]
+  }
+}
+
+resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+  name: vmName
+  location: location
+  tags: {
+    displayName: vmName
+  }
+  properties: {
+    hardwareProfile: {
+      vmSize: VmSize
+    }
+    osProfile: {
+      computerName: vmName
+      adminUsername: SQL_ADMIN_LOGIN_N
+      adminPassword: SQL_ADMIN_LOGIN_PASS
+    }
+    storageProfile: {
+      imageReference: {
+        publisher: 'MicrosoftWindowsServer'
+        offer: 'WindowsServer'
+        sku: '2019-Datacenter'
+        version: 'latest'
+      }
+      osDisk: {
+        name: '${vmName}OsDisk'
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: osDiskType
+        }
+        diskSizeGB: 128
+      }
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+        }
+      ]
+    }
+  }
 }
