@@ -1,0 +1,38 @@
+on:
+  workflow_dispatch: {}
+  push:
+    paths-ignore:
+      - '**.md'
+env:
+  ACR_MODULE_N: sql
+  RG_N: rg-azure-bicep-sql
+
+name: DEV - Deploy Azure Resource
+jobs:
+  deploy_to_dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # Checkout code
+    - uses: actions/checkout@v2
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Test Azure Resource Deployment
+    - uses: ./.github/actions/deploy-az-resource
+      with:
+        az_rg_n: ${{ env.RG_N }}
+        SQL_ADMIN_LOGIN_N: ${{ secrets.SQL_ADMIN_LOGIN_N }}
+        SQL_ADMIN_LOGIN_PASS: ${{ secrets.SQL_ADMIN_LOGIN_PASS }}
+
+      # Deploy Resource to ACR
+    - uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - run: |
+        az bicep build --file main.bicep
+        az bicep publish --file main.bicep --target br:${{ secrets.ACR_LOGIN_SERVER }}/bicep/modules/$ACR_MODULE_N:${{ github.sha }}

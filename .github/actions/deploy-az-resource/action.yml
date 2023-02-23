@@ -1,0 +1,24 @@
+name: 'Deploy Azure Resource'
+
+inputs:
+  az_rg_n:
+    description: “Azure ResourceGroup name”
+    required: true
+  SQL_ADMIN_LOGIN_N:
+    description: “SQL Server Admin Login Name”
+    required: true
+  SQL_ADMIN_LOGIN_PASS:
+    description: “SQL Server Admin Login Pass
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+  - name: test-bicep-file-deployment
+    uses: azure/arm-deploy@v1
+    with:
+      scope: resourcegroup
+      resourceGroupName: ${{ inputs.az_rg_n }}
+      deploymentMode: Incremental
+      template: examples/examples.bicep
+      failOnStdErr: true
