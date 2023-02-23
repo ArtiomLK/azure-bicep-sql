@@ -51,7 +51,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
 // ------------------------------------------------------------------------------------------------
 // DEPLOY SQL DATABASES
 // ------------------------------------------------------------------------------------------------
-resource database 'Microsoft.Sql/servers/databases@2021-11-01-preview' = {
+resource database 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   name: databaseName
   location: location
   sku: {
