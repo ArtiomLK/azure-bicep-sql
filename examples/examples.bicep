@@ -22,8 +22,8 @@ var sql_public_n = 'sql-server-public'
 // ------------------------------------------------------------------------------------------------
 // SQL Deployment Examples
 // ------------------------------------------------------------------------------------------------
-module sqlServer '../main.bicep' = {
-  name: 'sql-w-sqldb-1gb-public'
+module sqlServerPublic '../main.bicep' = {
+  name: 'sql-server-public'
   params: {
     location: location
     sql_admin_login_n: SQL_ADMIN_LOGIN_N
@@ -59,6 +59,6 @@ resource database 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
     sampleName: 'AdventureWorksLT'
   }
   dependsOn: [
-    sqlServer
+    sqlServerPublic
   ]
 }
