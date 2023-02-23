@@ -8,7 +8,7 @@ param location string
 param tags object = {}
 
 // ------------------------------------------------------------------------------------------------
-// SQL Configuration parameters
+// SQL Server Configuration parameters
 // ------------------------------------------------------------------------------------------------
 @description('The administrator username of the SQL logical server')
 param sql_admin_login_n string
@@ -25,6 +25,9 @@ param sql_n string
 @description('Enable public network access')
 param sql_enable_public_access bool = true
 
+// ------------------------------------------------------------------------------------------------
+// DEPLOY SQL Server
+// ------------------------------------------------------------------------------------------------
 resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   name: sql_n
   location: location
