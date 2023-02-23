@@ -18,13 +18,13 @@ param sql_admin_login_n string
 param sql_admin_login_pass string
 
 @description('Sql Server Name')
-param sqlServerName string = 'sqlserver${uniqueString(resourceGroup().id)}'
+param sql_n string = 'sqlserver${uniqueString(resourceGroup().id)}'
 
 @description('Enable public network access')
 param sql_enable_public_access bool = true
 
 resource sqlServer 'Microsoft.Sql/servers@2021-11-01-preview' = {
-  name: sqlServerName
+  name: sql_n
   location: location
   tags: tags
   properties: {
