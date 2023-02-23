@@ -54,13 +54,11 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
 resource database 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   name: databaseName
   location: location
+  tags: tags
   sku: {
     name: 'Basic'
     tier: 'Basic'
     capacity: 5
-  }
-  tags: {
-    displayName: databaseName
   }
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
