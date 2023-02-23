@@ -24,14 +24,6 @@ param sql_n string
 
 @description('Enable public network access')
 param sql_enable_public_access bool = true
-// ------------------------------------------------------------------------------------------------
-// SQL Database Configuration parameters
-// ------------------------------------------------------------------------------------------------
-@description('Sql Dabatase Name')
-@minLength(1)
-@maxLength(128)
-param sqldb_n string
-var databaseName = '${sql_n}/${sqldb_n}'
 
 // ------------------------------------------------------------------------------------------------
 // DEPLOY SQL Server
@@ -46,28 +38,6 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
     version: '12.0'
     publicNetworkAccess: sql_enable_public_access ? 'enabled' : 'disabled'
   }
-}
-
-// ------------------------------------------------------------------------------------------------
-// DEPLOY SQL DATABASES
-// ------------------------------------------------------------------------------------------------
-resource database 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
-  name: databaseName
-  location: location
-  tags: tags
-  sku: {
-    name: 'Basic'
-    tier: 'Basic'
-    capacity: 5
-  }
-  properties: {
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    maxSizeBytes: 2147483648
-    sampleName: 'AdventureWorksLT'
-  }
-  dependsOn: [
-    sqlServer
-  ]
 }
 
 output id string = sqlServer.id
