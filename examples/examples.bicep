@@ -21,7 +21,7 @@ param location string = 'eastus2'
 // SQL Deployment Examples
 // ------------------------------------------------------------------------------------------------
 module sqlServer '../main.bicep' = {
-  name: 'sql-server-public'
+  name: 'sql-w-sqldb-public'
   params: {
     location: location
     sql_admin_login_n: SQL_ADMIN_LOGIN_N
