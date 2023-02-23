@@ -25,7 +25,7 @@ var publicIpAddressName = '${vmName}PublicIP'
 var networkInterfaceName = '${vmName}NetInt'
 var osDiskType = 'StandardSSD_LRS'
 @description('The size of the VM')
-var VmSize = 'Standard_D2_v3'
+var VmSize = 'Standard_B2s'
 
 // ------------------------------------------------------------------------------------------------
 // SQL Database Configuration parameters
