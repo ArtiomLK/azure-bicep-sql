@@ -19,7 +19,7 @@ param sql_admin_login_pass string
 
 @description('Sql Server Name')
 @minLength(1)
-@maxLength(63)
+@maxLength(15)
 param sql_n string
 
 @description('Enable public network access')

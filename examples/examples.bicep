@@ -27,6 +27,6 @@ module sqlServer '../main.bicep' = {
     sql_admin_login_n: SQL_ADMIN_LOGIN_N
     sql_admin_login_pass: SQL_ADMIN_LOGIN_PASS
     tags: tags
-    sql_n: 'sql-server-publicsql-server-publicsql-server-publicsql-server-publicsql-server-publicsql-server-public'
+    sql_n: 'sql-server-public'
   }
 }
