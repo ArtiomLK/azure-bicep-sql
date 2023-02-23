@@ -18,7 +18,9 @@ param sql_admin_login_n string
 param sql_admin_login_pass string
 
 @description('Sql Server Name')
-param sql_n string = 'sqlserver${uniqueString(resourceGroup().id)}'
+@minLength(1)
+@maxLength(63)
+param sql_n string
 
 @description('Enable public network access')
 param sql_enable_public_access bool = true
