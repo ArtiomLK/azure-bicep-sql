@@ -32,7 +32,7 @@ param sqldb_n string = 'sample-db'
 // SQL Public Deployment Examples
 // ------------------------------------------------------------------------------------------------
 module sqlServerPublic '../main.bicep' = {
-  name: 'sql-server-public'
+  name: sql_public_n
   params: {
     location: location
     sql_admin_login_n: SQL_ADMIN_LOGIN_N
@@ -127,6 +127,6 @@ resource databasePrivate 'Microsoft.Sql/servers/databases@2022-05-01-preview' = 
     sampleName: 'AdventureWorksLT'
   }
   dependsOn: [
-    sqlServerPublic
+    sqlServerPrivate
   ]
 }
