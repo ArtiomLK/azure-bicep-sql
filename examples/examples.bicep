@@ -74,8 +74,8 @@ var subnets = [
   }
 ]
 
-resource vnetApp 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: 'vnet-kv-bicep'
+resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+  name: 'vnet-sql-bicep'
   location: location
   tags: tags
   properties: {
@@ -108,6 +108,9 @@ module sqlServerPrivate '../main.bicep' = {
     sql_admin_login_n: SQL_ADMIN_LOGIN_N
     sql_admin_login_pass: SQL_ADMIN_LOGIN_PASS
     sql_n: sql_private_n
+    sql_enable_public_access: false
+    snet_sql_pe_id: vnet.properties.subnets[0].id
+    pdnsz_sql_id: pdnsz.id
     tags: tags
   }
 }
