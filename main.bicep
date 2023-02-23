@@ -62,7 +62,7 @@ resource database 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   }
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
-    maxSizeBytes: 104857600
+    maxSizeBytes: 2147483648
     sampleName: 'AdventureWorksLT'
   }
   dependsOn: [
