@@ -150,9 +150,7 @@ resource databasePrivate 'Microsoft.Sql/servers/databases@2022-05-01-preview' = 
 resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: publicIpAddressName
   location: location
-  tags: {
-    displayName: publicIpAddressName
-  }
+  tags: tags
   properties: {
     publicIPAllocationMethod: 'Dynamic'
   }
@@ -161,9 +159,7 @@ resource publicIpAddress 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
 resource networkInterface 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   name: networkInterfaceName
   location: location
-  tags: {
-    displayName: networkInterfaceName
-  }
+  tags: tags
   properties: {
     ipConfigurations: [
       {
@@ -185,9 +181,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-05-01' = {
 resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   name: vmName
   location: location
-  tags: {
-    displayName: vmName
-  }
+  tags: tags
   properties: {
     hardwareProfile: {
       vmSize: VmSize
