@@ -17,15 +17,14 @@ var tags = {
 
 param location string = 'eastus2'
 
-var sql_public_n = 'sql-server-public'
-var sql_private_n = 'sql-server-private'
+var sql_public_n = 'sql-server-public-${uniqueString(resourceGroup().id)}'
+var sql_private_n = 'sql-server-private-${uniqueString(resourceGroup().id)}'
 
-var vmName = take('vm${uniqueString(resourceGroup().id)}', 15)
+var vmName = take('vm-${uniqueString(resourceGroup().id)}', 15)
+var VmSize = 'Standard_B2s'
 var publicIpAddressName = '${vmName}PublicIP'
 var networkInterfaceName = '${vmName}NetInt'
 var osDiskType = 'StandardSSD_LRS'
-@description('The size of the VM')
-var VmSize = 'Standard_B2s'
 
 // ------------------------------------------------------------------------------------------------
 // SQL Database Configuration parameters
